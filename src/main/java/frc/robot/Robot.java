@@ -149,6 +149,7 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
+    //Create XBox Controller Object
     c_xbox = new XboxController(0);
 
     //Get initial Limelight values
