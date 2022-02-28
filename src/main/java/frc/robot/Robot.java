@@ -86,9 +86,48 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autoSelected = m_chooser.getSelected();
-    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
+    
+    drivetrain.m_leftFrontDrive.set(ControlMode.PercentOutput, 1);
+
+    try {
+      Thread.sleep(3000);
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    drivetrain.m_leftFrontDrive.set(ControlMode.PercentOutput, 0);
+    drivetrain.m_leftBackDrive.set(ControlMode.PercentOutput, 1);
+
+    try {
+      Thread.sleep(3000);
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    drivetrain.m_leftBackDrive.set(ControlMode.PercentOutput, 0);
+    drivetrain.m_rightFrontDrive.set(ControlMode.PercentOutput, 1);
+
+    try {
+      Thread.sleep(3000);
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    drivetrain.m_rightFrontDrive.set(ControlMode.PercentOutput, 0);
+    drivetrain.m_rightBackDrive.set(ControlMode.PercentOutput, 1);
+
+    try {
+      Thread.sleep(3000);
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    drivetrain.m_rightBackDrive.set(ControlMode.PercentOutput, 0);
+
   }
 
   /** This function is called periodically during autonomous. */
@@ -102,48 +141,6 @@ public class Robot extends TimedRobot {
       default:
         // Put default auto code here
         break; */
-
-        drivetrain.m_leftFrontDrive.set(ControlMode.PercentOutput, 1);
-
-        try {
-          Thread.sleep(3000);
-        } catch (InterruptedException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-
-        drivetrain.m_leftFrontDrive.set(ControlMode.PercentOutput, 0);
-        drivetrain.m_leftBackDrive.set(ControlMode.PercentOutput, 1);
-
-        try {
-          Thread.sleep(3000);
-        } catch (InterruptedException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-
-        drivetrain.m_leftBackDrive.set(ControlMode.PercentOutput, 0);
-        drivetrain.m_rightFrontDrive.set(ControlMode.PercentOutput, 1);
-
-        try {
-          Thread.sleep(3000);
-        } catch (InterruptedException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-
-        drivetrain.m_rightFrontDrive.set(ControlMode.PercentOutput, 0);
-        drivetrain.m_rightBackDrive.set(ControlMode.PercentOutput, 1);
-
-        try {
-          Thread.sleep(3000);
-        } catch (InterruptedException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-
-        drivetrain.m_rightBackDrive.set(ControlMode.PercentOutput, 0);
-
     }
 
   /** This function is called once when teleop is enabled. */
@@ -157,7 +154,6 @@ public class Robot extends TimedRobot {
     hasTargetEntry = table.getEntry("tv");
     offsetXEntry = table.getEntry("tx");
     offsetYEntry = table.getEntry("ty");
-
 
 
   }
