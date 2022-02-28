@@ -49,6 +49,38 @@ public class Drivetrain {
        return;
     }
 
+    //Intakes values for each of the three possible movements and sets motor power appropriatly for a certain period of time
+    public void mechanumDriveTime(double straight, double turn, double strafe, long time) {
+        //Calculate the speed to apply to each of the wheels (LF, LB, RB, RF)
+        motorSpeeds[0] = straight + turn + strafe;
+        motorSpeeds[1] = straight + turn - strafe;
+        motorSpeeds[2] = straight - turn + strafe;
+        motorSpeeds[3] = straight - turn - strafe;
+ 
+        //Normalize these speeds
+        normalizeArray(motorSpeeds, 1);
+ 
+        //Apply the speed values appropriatly
+        m_leftFrontDrive.set(ControlMode.PercentOutput, motorSpeeds[0]);
+        m_leftBackDrive.set(ControlMode.PercentOutput, motorSpeeds[1]);
+        m_rightBackDrive.set(ControlMode.PercentOutput, motorSpeeds[2]);
+        m_rightFrontDrive.set(ControlMode.PercentOutput, motorSpeeds[3]);
+
+        //Sleep for the specified amount of time
+        try {
+            Thread.sleep(time);
+        } catch (Exception e) {}
+ 
+
+        //Set the motor speeds back to zero
+        m_leftFrontDrive.set(ControlMode.PercentOutput, 0);
+        m_leftBackDrive.set(ControlMode.PercentOutput, 0);
+        m_rightBackDrive.set(ControlMode.PercentOutput, 0);
+        m_rightFrontDrive.set(ControlMode.PercentOutput, 0);
+
+        return;
+     }
+
 
     //Normalizes an array to a maximum value
     public void normalizeArray(double[] input, double valueToNormalizeTo) {
