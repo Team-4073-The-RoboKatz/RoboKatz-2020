@@ -197,7 +197,7 @@ public class Robot extends TimedRobot {
 
     //Apply joystick values
     drivetrain.mechanumDrive(straight, turn, strafe);
-    shooter.m_shooter.set(ControlMode.PercentOutput, 0.7*shooterPower);
+    shooter.m_shooter.set(0.7*shooterPower);
 
     //Use the buttons to control the intake
     if (c_xbox.getYButton()) {
