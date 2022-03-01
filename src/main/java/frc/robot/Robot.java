@@ -176,7 +176,7 @@ public class Robot extends TimedRobot {
     straight = -c_xbox.getRawAxis(5);
     strafe = c_xbox.getRawAxis(4);
     turn = c_xbox.getRawAxis(3) - c_xbox.getRawAxis(2);
-    shooterPower = c_xbox.getRawAxis(1);
+    intakePower = c_xbox.getRawAxis(1);
 
     //Double-check to ensure that we;re getting actual readings
     if (Math.abs(straight) < 0.1) {
@@ -197,15 +197,15 @@ public class Robot extends TimedRobot {
 
     //Apply joystick values
     drivetrain.mechanumDrive(straight, turn, strafe);
-    shooter.m_shooter.set(0.7*shooterPower);
+
+
+    shooter.m_intake.set(ControlMode.PercentOutput, intakePower);
 
     //Use the buttons to control the intake
     if (c_xbox.getYButton()) {
-      shooter.m_intake.set(ControlMode.PercentOutput, 0.5);
-    } else if (c_xbox.getBButton()) {
-      shooter.m_intake.set(ControlMode.PercentOutput, -0.5);
+      shooter.m_shooter.set(1);
     } else {
-      shooter.m_intake.set(ControlMode.PercentOutput, 0);
+      shooter.m_shooter.set(0);
     }
 
   }
