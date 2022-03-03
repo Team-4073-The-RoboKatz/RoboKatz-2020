@@ -52,6 +52,7 @@ public class Robot extends TimedRobot {
   public double turn;
   public double shooterPower;
   public double intakePower;
+  public double index;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -193,6 +194,9 @@ public class Robot extends TimedRobot {
 
     if (Math.abs(shooterPower) < 0.1) {
       shooterPower = 0;
+    }
+    if (Math.abs(index) <0.1){
+      index = 0; 
     }
 
     //Apply joystick values
