@@ -9,6 +9,7 @@ package frc.robot;
         public static final int backRightPort = 2;
         public static final int shooterPort = 8;
         public static final int intakePort = 5;
-
+        public static final int indexPort = 6;
+        public static final int climberPort=7;
 
     }

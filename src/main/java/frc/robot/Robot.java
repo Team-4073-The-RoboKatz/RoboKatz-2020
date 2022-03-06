@@ -178,6 +178,7 @@ public class Robot extends TimedRobot {
     strafe = c_xbox.getRawAxis(4);
     turn = c_xbox.getRawAxis(3) - c_xbox.getRawAxis(2);
     intakePower = c_xbox.getRawAxis(1);
+    index = c_xbox.getRawAxis(0);
 
     //Double-check to ensure that we;re getting actual readings
     if (Math.abs(straight) < 0.1) {
@@ -188,7 +189,7 @@ public class Robot extends TimedRobot {
       strafe = 0;
     }
 
-    if (Math.abs(turn) < 0.1) {
+    if (Math.abs(turn) < 0.1) {                                                    
       turn = 0;
     }
 
@@ -204,29 +205,13 @@ public class Robot extends TimedRobot {
 
 
     shooter.m_intake.set(ControlMode.PercentOutput, intakePower);
+    shooter.m_index.set(ControlMode.PercentOutput, index);
 
     //Use the buttons to control the intake
-    if (c_xbox.getYButton()) {
-      shooter.m_shooter.set(1);
-    } else {
+    if (c_xbox.getYButton())
+      shooter.m_shooter.set(.75);
+    else {
       shooter.m_shooter.set(0);
     }
 
-  }
-
-  /** This function is called once when the robot is disabled. */
-  @Override
-  public void disabledInit() {}
-
-  /** This function is called periodically when disabled. */
-  @Override
-  public void disabledPeriodic() {}
-
-  /** This function is called once when test mode is enabled. */
-  @Override
-  public void testInit() {}
-
-  /** This function is called periodically during test mode. */
-  @Override
-  public void testPeriodic() {}
-}
+   
