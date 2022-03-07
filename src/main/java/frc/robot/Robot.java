@@ -87,47 +87,34 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    
-    drivetrain.m_leftFrontDrive.set(ControlMode.PercentOutput, 1);
+    //Drive Backwards
+    drivetrain.mechanumDriveTime(-0.6, 0, 0, 2500);
 
+    //Turn on Shooter
+    shooter.m_shooter.set(0.75);
+
+    //Wait a bit
     try {
-      Thread.sleep(3000);
+      Thread.sleep(4000);
     } catch (InterruptedException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
-    drivetrain.m_leftFrontDrive.set(ControlMode.PercentOutput, 0);
-    drivetrain.m_leftBackDrive.set(ControlMode.PercentOutput, 1);
+    //Move the indexer
+    shooter.m_index.set(ControlMode.PercentOutput, 0.75);
 
+    //Wait a bit
     try {
-      Thread.sleep(3000);
+      Thread.sleep(5000);
     } catch (InterruptedException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
-    drivetrain.m_leftBackDrive.set(ControlMode.PercentOutput, 0);
-    drivetrain.m_rightFrontDrive.set(ControlMode.PercentOutput, 1);
+    shooter.m_index.set(ControlMode.PercentOutput, 0);
+    shooter.m_shooter.set(0);
 
-    try {
-      Thread.sleep(3000);
-    } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-
-    drivetrain.m_rightFrontDrive.set(ControlMode.PercentOutput, 0);
-    drivetrain.m_rightBackDrive.set(ControlMode.PercentOutput, 1);
-
-    try {
-      Thread.sleep(3000);
-    } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-
-    drivetrain.m_rightBackDrive.set(ControlMode.PercentOutput, 0);
 
   }
 
