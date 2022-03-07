@@ -205,5 +205,11 @@ public class Robot extends TimedRobot {
     } else {
       shooter.m_climber.set(ControlMode.PercentOutput,0);
     }
+
+    if (c_xbox.getBButton()) {
+      shooter.m_climber.set(ControlMode.PercentOutput,-1);
+    } else {
+      shooter.m_climber.set(ControlMode.PercentOutput,0);
+    }
   }
 }
