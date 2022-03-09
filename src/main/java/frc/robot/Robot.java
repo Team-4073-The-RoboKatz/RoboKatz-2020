@@ -101,13 +101,11 @@ public class Robot extends TimedRobot {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-
-    //Move the indexer
+  //Move the indexer
     shooter.m_index.set(ControlMode.PercentOutput, 0.50);
-
-    //Wait a bit
+  //Wait a bit
     try {
-      Thread.sleep(2000);
+      Thread.sleep(1000);
     } catch (InterruptedException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -115,15 +113,16 @@ public class Robot extends TimedRobot {
 
     shooter.m_index.set(ControlMode.PercentOutput, 0);
     shooter.m_shooter.set(0);
-    //Turn around (180º)
-    drivetrain.mechanumDriveTime(0, 1, 0, 500);;
-        //Drive straight for 100(..seconds?)
+    //Turn around (180º..maybe)
+    drivetrain.mechanumDriveTime(0, 1, 0, 500);
+    //Drive straight for 2(..seconds?) and turns on the intake
+    shooter.m_intake.set(ControlMode.PercentOutput,   (9.75));
     drivetrain.mechanumDriveTime(1, 0, 0, 2000);
-    //Turn on Intake
-    shooter.m_intake.set(ControlMode.PercentOutput, .75);
-    shooter.m_index.set(ControlMode.PercentOutput, .15);
-
-
+    //Turn the robot 180, Turn on the shooter, Drive back to the starting line. (TRY TO OMMIT WITH SHOOTER TWEAKING) 
+    drivetrain.mechanumDriveTime(0, 1, 0, 500);    
+    shooter.m_shooter.set(.75);
+    drivetrain.mechanumDriveTime(1, 0, 0, 2000);
+    shooter.m_index.set(ControlMode.PercentOutput, (.50));
   }
 
   /** This function is called periodically during autonomous. */
