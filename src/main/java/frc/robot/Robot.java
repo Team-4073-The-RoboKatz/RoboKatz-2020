@@ -18,6 +18,8 @@ import frc.robot.Hardware.Shooter;
 
 import java.lang.Math.*;
 
+import javax.print.DocPrintJob;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -53,6 +55,8 @@ public class Robot extends TimedRobot {
   public double shooterPower;
   public double intakePower;
   public double index;
+  public double highshooterpower = (.75);
+  public double lowshooterpower = (.30);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -87,26 +91,23 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    //Drive Backwards
-    drivetrain.mechanumDriveTime(-0.6, 0, 0, 2500);
-
-    //Turn on Shooter
-    shooter.m_shooter.set(0.75);
+      //Turn on Shooter
+    shooter.m_shooter.set(highshooterpower);
 
     //Wait a bit
     try {
-      Thread.sleep(4000);
+      Thread.sleep(1500);
     } catch (InterruptedException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
     //Move the indexer
-    shooter.m_index.set(ControlMode.PercentOutput, 0.75);
+    shooter.m_index.set(ControlMode.PercentOutput, 0.50);
 
     //Wait a bit
     try {
-      Thread.sleep(5000);
+      Thread.sleep(2000);
     } catch (InterruptedException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -114,6 +115,13 @@ public class Robot extends TimedRobot {
 
     shooter.m_index.set(ControlMode.PercentOutput, 0);
     shooter.m_shooter.set(0);
+    //Turn around (180º)
+    drivetrain.mechanumDriveTime(0, 1, 0, 500);;
+        //Drive straight for 100(..seconds?)
+    drivetrain.mechanumDriveTime(1, 0, 0, 2000);
+    //Turn on Intake
+    shooter.m_intake.set(ControlMode.PercentOutput, .75);
+    shooter.m_index.set(ControlMode.PercentOutput, .15);
 
 
   }
@@ -126,6 +134,7 @@ public class Robot extends TimedRobot {
         // Put custom auto code here
         break;
       case kDefaultAuto:
+
       default:
         // Put default auto code here
         break; */
@@ -161,7 +170,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("xDistance", xDistance);
 
     //Store the values to use to control the robot
-    straight = -c_xbox.getRawAxis(5);
+    straight = c_xbox.getRawAxis(5);
     strafe = c_xbox.getRawAxis(4);
     turn = c_xbox.getRawAxis(3) - c_xbox.getRawAxis(2);
     intakePower = c_xbox.getRawAxis(1);
@@ -194,7 +203,12 @@ public class Robot extends TimedRobot {
 
     //Use the buttons to control the intake
     if (c_xbox.getYButton()) {
-      shooter.m_shooter.set(.75);
+      shooter.m_shooter.set(highshooterpower);
+    } else {
+      shooter.m_shooter.set(0);
+    }
+    if (c_xbox.getXButton()) {
+      shooter.m_shooter.set(lowshooterpower);
     } else {
       shooter.m_shooter.set(0);
     }

@@ -3,7 +3,6 @@ package frc.robot.Hardware;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import frc.robot.Constants;
 
 public class Shooter {
