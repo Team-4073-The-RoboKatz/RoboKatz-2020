@@ -91,7 +91,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-      //Turn on Shooter
+    //Calibrate the Gyroscope
+    drivetrain.s_gyro.calibrate();
+
+    //Turn on Shooter
     shooter.m_shooter.set(highshooterpower);
 
     //Wait a bit

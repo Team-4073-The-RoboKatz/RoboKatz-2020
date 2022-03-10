@@ -31,8 +31,6 @@ public class Drivetrain {
         m_rightFrontDrive.setInverted(true);
 
         motorSpeeds = new double[4];
-
-        s_gyro.calibrate();
     }
 
 
