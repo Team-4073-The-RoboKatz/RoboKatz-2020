@@ -3,6 +3,7 @@ package frc.robot.Hardware;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import frc.robot.Constants;
 
 public class Drivetrain {
@@ -12,6 +13,7 @@ public class Drivetrain {
     public static TalonSRX m_rightFrontDrive;
     public static TalonSRX m_leftBackDrive;
     public static TalonSRX m_rightBackDrive;
+    public static ADXRS450_Gyro s_gyro;
     
     //Create other necessary data structures
     public double[] motorSpeeds;
@@ -23,11 +25,14 @@ public class Drivetrain {
         m_leftBackDrive = new TalonSRX(Constants.backLeftPort);
         m_rightBackDrive = new TalonSRX(Constants.backRightPort);
         m_rightFrontDrive = new TalonSRX(Constants.frontRightPort);
+        s_gyro = new ADXRS450_Gyro();
 
         m_rightBackDrive.setInverted(true);
         m_rightFrontDrive.setInverted(true);
 
         motorSpeeds = new double[4];
+
+        s_gyro.calibrate();
     }
 
 
@@ -48,6 +53,7 @@ public class Drivetrain {
 
        return;
     }
+
 
     //Intakes values for each of the three possible movements and sets motor power appropriatly for a certain period of time
     public void mechanumDriveTime(double straight, double turn, double strafe, long time) {
@@ -78,7 +84,10 @@ public class Drivetrain {
         m_rightBackDrive.set(ControlMode.PercentOutput, 0);
         m_rightFrontDrive.set(ControlMode.PercentOutput, 0);
 
-        return;
+        //Sleep for the specified amount of time
+        try {
+            Thread.sleep(250);
+        } catch (Exception e) {}
      }
 
 
@@ -103,5 +112,56 @@ public class Drivetrain {
         for (int i = 0; i < input.length; i++) {
             input[i] = input[i] * valueToNormalizeTo / currentMax;
         }
-    }  
+    }
+    
+
+    //Turns the robot to a given angle using the built-in gyroscope using an intaken number of degrees
+    public void turnToAngle(double speed, double degrees) {
+        //Get the initial angle of the robot (just for initial calculations so we don't keep accessing it over and over again)
+        double startAngle = s_gyro.getAngle();        
+
+        //Normalize the angle to travel to be within -180 to 180 degrees so we don't rotate a bazillion times
+        while ((degrees - startAngle) < -180 || (degrees - startAngle) > 180) {
+            if  ((degrees - startAngle) < -180) {
+                degrees += 360;
+            } else if ((degrees - startAngle) > 180) {
+                degrees -=360;
+            }
+        }
+
+        //Change the speed based on what direction we are turning
+        if ((startAngle - degrees) > 0) {
+            speed *= -1;
+        }
+
+        //Set the speed of the motors to turn
+        m_leftFrontDrive.set(ControlMode.PercentOutput, speed);
+        m_leftBackDrive.set(ControlMode.PercentOutput, speed);
+        m_rightBackDrive.set(ControlMode.PercentOutput, -speed);
+        m_rightFrontDrive.set(ControlMode.PercentOutput, -speed);
+
+        //Wait until we're within 25 degrees of the target angle
+        while (Math.abs(s_gyro.getAngle() - degrees) > 25) {}
+
+        //Linearly scale the speed down as we approach the target so we don't overshoot
+        while (Math.abs(s_gyro.getAngle() - degrees) > 5) {
+            //Calculate the speed based on the distance left to go (the minimum amount this will ever be is 25% of the original speed)
+            double tempSpeed = (0.75*(Math.abs(s_gyro.getAngle() - degrees)/25) + 0.25) * speed; 
+
+            //Actually apply the speed
+            m_leftFrontDrive.set(ControlMode.PercentOutput, tempSpeed);
+            m_leftBackDrive.set(ControlMode.PercentOutput, tempSpeed);
+            m_rightBackDrive.set(ControlMode.PercentOutput, -tempSpeed);
+            m_rightFrontDrive.set(ControlMode.PercentOutput, -tempSpeed);
+        }
+
+        //Set everything to zero power and wait a quarter second for braking purposes
+        m_leftFrontDrive.set(ControlMode.PercentOutput, 0);
+        m_leftBackDrive.set(ControlMode.PercentOutput, 0);
+        m_rightBackDrive.set(ControlMode.PercentOutput, 0);
+        m_rightFrontDrive.set(ControlMode.PercentOutput, 0);
+        try {
+            Thread.sleep(250);
+        } catch (Exception e) {}
+    }
 }
