@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
   public double shooterPower;
   public double intakePower;
   public double index;
-  public double highshooterpower = (.75);
+  public double highshooterpower = (.45);
   public double lowshooterpower = (.30);
 
   /**
@@ -91,15 +91,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    //Calibrate the Gyroscope
-    drivetrain.s_gyro.calibrate();
-
-    //Turn on Shooter
-    shooter.m_shooter.set(highshooterpower);
+    ///Turn on Shooter
+    shooter.m_shooter.set(.45);
 
     //Wait a bit
     try {
-      Thread.sleep(1500);
+      Thread.sleep(3000);
     } catch (InterruptedException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -108,7 +105,7 @@ public class Robot extends TimedRobot {
     shooter.m_index.set(ControlMode.PercentOutput, 0.50);
   //Wait a bit
     try {
-      Thread.sleep(1000);
+      Thread.sleep(1500);
     } catch (InterruptedException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -117,34 +114,12 @@ public class Robot extends TimedRobot {
     shooter.m_index.set(ControlMode.PercentOutput, 0);
     shooter.m_shooter.set(0);
 
-    //Turn around (180º..maybe)
-    drivetrain.mechanumDriveTime(0, 1, 0, 500);
-
-    //Drive straight for 2(..seconds?) and turns on the intake
-    shooter.m_intake.set(ControlMode.PercentOutput, (.75));
-    drivetrain.mechanumDriveTime(1, 0, 0, 2000);
-
-    //Turn the robot 180, Turn on the shooter, Drive back to the starting line. (TRY TO OMMIT WITH SHOOTER TWEAKING) 
-
-    drivetrain.mechanumDriveTime(-1, 0, 0, 2000);
-    shooter.m_shooter.set(highshooterpower);
-    drivetrain.mechanumDriveTime(0, 1, 0, 500);
-
-    try {
-      Thread.sleep(500);
-    } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-
-    shooter.m_index.set(ControlMode.PercentOutput, (.50));
-    //WAIT//
-    //Turns OFF shooter/index/intake
+    drivetrain.mechanumDriveTime(1, 0, 0, 1000);
     
-    shooter.m_index.set(ControlMode.PercentOutput, (0));
-    shooter.m_intake.set(ControlMode.PercentOutput, (0));
-    shooter.m_shooter.set(0);
   }
+    
+
+  
 
   /** This function is called periodically during autonomous. */
   @Override
@@ -191,7 +166,7 @@ public class Robot extends TimedRobot {
 
     //Store the values to use to control the robot
     straight = c_xbox.getRawAxis(5);
-    strafe = c_xbox.getRawAxis(4);
+    strafe = -c_xbox.getRawAxis(4);
     turn = c_xbox.getRawAxis(3) - c_xbox.getRawAxis(2);
     intakePower = c_xbox.getRawAxis(1);
     index = c_xbox.getRawAxis(0);
@@ -223,27 +198,23 @@ public class Robot extends TimedRobot {
 
     //Use the buttons to control the intake
     if (c_xbox.getYButton()) {
-      shooter.m_shooter.set(highshooterpower);
-    } else {
-      shooter.m_shooter.set(0);
-    }
-    if (c_xbox.getXButton()) {
-      shooter.m_shooter.set(lowshooterpower);
+      shooter.m_shooter.set(1);
     } else {
       shooter.m_shooter.set(0);
     }
     
+    
     //Climber 
-    if (c_xbox.getAButton()) {
+    if (c_xbox.getBButton()) {
       shooter.m_climber.set(ControlMode.PercentOutput,1);
     } else {
       shooter.m_climber.set(ControlMode.PercentOutput,0);
     }
 
-    if (c_xbox.getBButton()) {
+    if (c_xbox.getXButton()) {
       shooter.m_climber.set(ControlMode.PercentOutput,-1);
     } else {
       shooter.m_climber.set(ControlMode.PercentOutput,0);
     }
   }
-}
+}  
