@@ -57,7 +57,7 @@ public class Robot extends TimedRobot {
   public double index;
   public double highshooterpower = (.45);
   public double lowshooterpower = (.30);
-  public double vexcampspeeds = (.50);
+  public double maxspeed = (.50);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -193,7 +193,7 @@ public class Robot extends TimedRobot {
     }
 
     //Apply joystick values
-    drivetrain.mechanumDrive(straight, turn, strafe, vexcampspeeds);
+    drivetrain.mechanumDrive(straight, turn, strafe, maxspeed);
     shooter.m_intake.set(ControlMode.PercentOutput, intakePower);
     shooter.m_index.set(ControlMode.PercentOutput, index);
 
