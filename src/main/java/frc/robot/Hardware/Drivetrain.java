@@ -35,14 +35,15 @@ public class Drivetrain {
 
 
     //Intakes values for each of the three possible movements and sets motor power appropriatly
-    public void mechanumDrive(double straight, double turn, double strafe) {
+    public void mechanumDrive(double straight, double turn, double strafe, double vexcampspeeds) {
        //Calculate the speed to apply to each of the wheels (LF, LB, RB, RF)
+       
        motorSpeeds[0] = straight + turn + strafe;
        motorSpeeds[1] = straight + turn - strafe;
        motorSpeeds[2] = straight - turn + strafe;
        motorSpeeds[3] = straight - turn - strafe;
 
-       normalizeArray(motorSpeeds, 1);
+       normalizeArray(motorSpeeds, vexcampspeeds);
 
        m_leftFrontDrive.set(ControlMode.PercentOutput, motorSpeeds[0]);
        m_leftBackDrive.set(ControlMode.PercentOutput, motorSpeeds[1]);

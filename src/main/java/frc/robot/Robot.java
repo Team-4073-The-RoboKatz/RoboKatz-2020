@@ -49,14 +49,15 @@ public class Robot extends TimedRobot {
   NetworkTableEntry offsetYEntry;
 
   //Create variables
-  public double straight =-.50;
-  public double strafe =-.50;
-  public double turn =-.50;
+  public double straight;
+  public double strafe;
+  public double turn;
   public double shooterPower;
   public double intakePower;
   public double index;
   public double highshooterpower = (.45);
   public double lowshooterpower = (.30);
+  public double vexcampspeeds;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -192,7 +193,7 @@ public class Robot extends TimedRobot {
     }
 
     //Apply joystick values
-    drivetrain.mechanumDrive(straight, turn, strafe);
+    drivetrain.mechanumDrive(straight, turn, strafe, vexcampspeeds);
     shooter.m_intake.set(ControlMode.PercentOutput, intakePower);
     shooter.m_index.set(ControlMode.PercentOutput, index);
 
