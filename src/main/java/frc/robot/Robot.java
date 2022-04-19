@@ -57,7 +57,7 @@ public class Robot extends TimedRobot {
   public double index;
   public double highshooterpower = (.45);
   public double lowshooterpower = (.30);
-  public double vexcampspeeds;
+  public double vexcampspeeds = (.50);
 
   /**
    * This function is run when the robot is first started up and should be used for any
