@@ -49,9 +49,9 @@ public class Robot extends TimedRobot {
   NetworkTableEntry offsetYEntry;
 
   //Create variables
-  public double straight;
-  public double strafe;
-  public double turn;
+  public double straight =-.50;
+  public double strafe =-.50;
+  public double turn =-.50;
   public double shooterPower;
   public double intakePower;
   public double index;
