@@ -43,6 +43,7 @@ public class Drivetrain {
        motorSpeeds[2] = straight - turn + strafe;
        motorSpeeds[3] = straight - turn - strafe;
 
+        //Make the motors drive at a speed set in robot.java (max speed)
        normalizeArray(motorSpeeds, vexcampspeeds);
 
        m_leftFrontDrive.set(ControlMode.PercentOutput, motorSpeeds[0]);
